@@ -1,79 +1,70 @@
-
 [
-    
-    {
-        "car_name": "mercedes",
-        "country": "germany",
+     {
+        "brand":"Mercedes",
+        "country": "Germany",
         "foundation_year": 1920,
-        "model": 
-        [
+        "models": [
             {
-                "model_name" :"a_series",
+                "model_name": "a_series",
                 "price": 15000,
                 "isAutomatic": true
             },
-            {
-                "model_name" :"b_series",
+             {
+                "model_name": "b_series",
                 "price": 25000,
                 "isAutomatic": false
             },
-            {
-                "model_name" :"c_series",
+             {
+                "model_name": "c_series",
                 "price": 35000,
                 "isAutomatic": true
             }
-
         ]
-    }
-    ,
+            
+
+    },
     {
-        "car_name": "honda",
-        "country": "japan",
+        "brand": "Honda",
+        "country": "Japan",
         "foundation_year": 1940,
-        "model": 
-        [
-            {
-                "model_name" :"jazz",
+        "models": [
+             {
+                "model_name":"jazz",
                 "price": 15000,
                 "isAutomatic": true
             },
-            {
-                "model_name" :"civic",
+             {
+                "model_name":"civic",
                 "price": 25000,
                 "isAutomatic": false
             },
-            {
-                "model_name" :"cr-v",
+             {
+                "model_name": "cr-v",
                 "price": 35000,
                 "isAutomatic": true
             },
-            {
-                "model_name" :"accord",
+             {
+                "model_name": "accord",
                 "price": 45000,
                 "isAutomatic": true
             }
-
         ]
-    }
-    ,
-    {
-        "car_name": "renault",
-        "country": "france",
+    },
+     {
+        "brand": "Renault",
+        "country": "France",
         "foundation_year": 1920,
-        "model": 
-        [
-            {
-                "model_name" :"clio",
+        "models": [
+             {
+                "model_name": "Clio",
                 "price": 15000,
                 "isAutomatic": true
             },
-            {
-                "model_name" :"megane",
+             {
+                "model_name": "Megane",
                 "price": 25000,
                 "isAutomatic": false
             }
-            
-
         ]
     }
 ]

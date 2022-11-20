@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+// To parse required this JSON data, do
 //
 //     final car = carFromJson(jsonString);
 
@@ -10,42 +10,42 @@ String carToJson(List<Car> data) => json.encode(List<dynamic>.from(data.map((x) 
 
 class Car {
     Car({
-       required this.carName,
-       required this.country,
-       required this.foundationYear,
-       required this.model,
+        required this.brand,
+        required this.country,
+        required this.foundationYear,
+        required this.models,
     });
 
-   final String carName;
-   final String country;
-   final int foundationYear;
-   final List<Model> model;
+    String brand;
+    String country;
+    int foundationYear;
+    List<Model> models;
 
     factory Car.fromJson(Map<String, dynamic> json) => Car(
-        carName: json["car_name"],
+        brand: json["brand"],
         country: json["country"],
         foundationYear: json["foundation_year"],
-        model: List<Model>.from(json["model"].map((x) => Model.fromJson(x))),
+        models: List<Model>.from(json["models"].map((x) => Model.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "car_name": carName,
+        "brand": brand,
         "country": country,
         "foundation_year": foundationYear,
-        "model": List<dynamic>.from(model.map((x) => x.toJson())),
+        "models": List<dynamic>.from(models.map((x) => x.toJson())),
     };
 }
 
 class Model {
     Model({
-       required this.modelName,
-       required this.price,
-       required this.isAutomatic,
+        required this.modelName,
+        required this.price,
+        required this.isAutomatic,
     });
 
-    final String modelName;
-    final int price;
-    final bool isAutomatic;
+    String modelName;
+    int price;
+    bool isAutomatic;
 
     factory Model.fromJson(Map<String, dynamic> json) => Model(
         modelName: json["model_name"],

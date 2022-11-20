@@ -1,64 +1,90 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
-import 'package:read_json_from_local/model.dart';
+
+import 'model.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late final Future<List<Car>> _lastCarList;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _lastCarList = carsJsonRead();
+  }
+
   @override
   Widget build(BuildContext context) {
     carsJsonRead();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Material App Bar'),
+        title: const Text('Material App Bar'),
       ),
+     
       body: Center(
-        child: Container(
-          child: Text('Hello World'),
-        ),
-      ),
+          child: FutureBuilder(
+            // initialData: [
+            //   Car(brand: "brand", country: "country", foundationYear: 1900, models: [] ),
+            // ],
+        future: _lastCarList,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            List<Car> dataList = snapshot.data;
+            return ListView.builder(
+                itemCount: dataList.length,
+                itemBuilder: (contex, index) {
+                  return ExpansionTile(
+                    title: Text(dataList[index].brand),
+                    subtitle: Text(dataList[index].country),
+                    initiallyExpanded: false,
+                    children: dataList[index]
+                        .models
+                        .map((e) => ListTile(
+                              leading: Text(
+                                "Price: \$${e.price}",
+                              ),
+                              title: Text(e.modelName),
+                              subtitle:
+                                  Text("Is It Automatic?: ${e.isAutomatic}"),
+                            ))
+                        .toList(),
+                  );
+                });
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      )),
     );
   }
 
-  Future<void> carsJsonRead() async {
-    final data = await DefaultAssetBundle.of(context)
-        .loadString("assets/data/cars.json");
-  
+  Future<List<Car>> carsJsonRead() async {
+    try {
+      debugPrint("carsJsonRead");
+      await Future.delayed(const Duration(milliseconds: 1500));
+      // ignore: use_build_context_synchronously
+      final data = await DefaultAssetBundle.of(context)
+          .loadString("assets/data/cars.json");
 
-    debugPrint("*******************************");
-    printCars(car: 0, model: 0, data: data);
-     debugPrint("*******************************");
-    printCars(car: 0, model: 1, data: data);
-     debugPrint("*******************************");
-    printCars(car: 0, model: 2, data: data);
-     debugPrint("*******************************");
-    printCars(car: 1, model: 0, data: data);
-     debugPrint("*******************************");
-    printCars(car: 1, model: 1, data: data);
-    debugPrint("*******************************");
-    printCars(car: 1, model: 2, data: data);
-     debugPrint("*******************************");
-    printCars(car: 1, model: 3, data: data);
-     debugPrint("*******************************");
-    printCars(car: 2, model: 0, data: data);
-     debugPrint("*******************************");
-    printCars(car: 2, model: 1, data: data);
-  }
 
-  void printCars({required int car, required int model, required String data}) {
-    List<Car> carList = carFromJson(data);
-    debugPrint( "Car Name: ${carList[car].carName}");
-    debugPrint("Country: ${carList[car].country}");
-    debugPrint("Foundation Year: ${carList[car].foundationYear.toString()}");
-    debugPrint("Model Name: ${carList[car].model[model].modelName}");
-    debugPrint("Price: \$${carList[car].model[model].price.toString()}");
-    debugPrint("Is It Automatic? : ${carList[car].model[model].isAutomatic.toString()}");
+      List<Car> liste = carFromJson(data);
+
+      return liste;
+    } catch (e) {
+      return Future.error(e);
+    }
   }
 }
